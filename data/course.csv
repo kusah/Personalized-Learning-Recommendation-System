@@ -1,0 +1,29 @@
+course_name,skill,level,career_path
+SQL for Data Analysis,SQL,Beginner,Data Analyst
+Advanced SQL Queries,SQL,Intermediate,Data Analyst
+Power BI Fundamentals,Power BI,Beginner,Data Analyst
+Power BI Dashboard Design,Power BI,Intermediate,Data Analyst
+Excel for Data Analysis,Excel,Beginner,Data Analyst
+Statistics Essentials,Statistics,Beginner,Data Analyst
+Python for Data Analysis,Python,Intermediate,Data Analyst
+Business Analytics Basics,Business Analysis,Beginner,Business Analyst
+Requirements Gathering,Business Analysis,Intermediate,Business Analyst
+Agile Methodologies,Agile,Beginner,Business Analyst
+Python Programming,Python,Beginner,Data Scientist
+Python for Data Science,Python,Intermediate,Data Scientist
+Machine Learning Basics,Machine Learning,Beginner,Data Scientist
+Supervised Learning,Machine Learning,Intermediate,Data Scientist
+Data Visualization with Python,Visualization,Intermediate,Data Scientist
+Deep Learning Fundamentals,Deep Learning,Advanced,Data Scientist
+Statistics for Data Science,Statistics,Intermediate,Data Scientist
+Data Structures and Algorithms,DSA,Intermediate,Software Developer
+Object Oriented Programming,OOP,Beginner,Software Developer
+Web Development Basics,Web Development,Beginner,Software Developer
+Java Programming,Java,Intermediate,Software Developer
+System Design Basics,System Design,Advanced,Software Developer
+Git and GitHub,Version Control,Beginner,Software Developer
+Machine Learning with Python,Machine Learning,Intermediate,Machine Learning Engineer
+Model Deployment,MLOps,Intermediate,Machine Learning Engineer
+Feature Engineering,Machine Learning,Advanced,Machine Learning Engineer
+Docker for ML,Docker,Intermediate,Machine Learning Engineer
+MLOps Fundamentals,MLOps,Advanced,Machine Learning Engineer
