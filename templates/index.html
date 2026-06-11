@@ -1,0 +1,114 @@
+<html>
+<head>
+    <title>Learning Recommendation System</title>
+    <a href="/history">
+    <button type="button">
+        View History
+    </button>
+</a>
+<a href="/progress">
+    <button type="button">
+        View Progress
+    </button>
+</a>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<h1>Personalized Learning Recommendation System</h1>
+<div class="container">
+<form method="POST">
+    <h3>Career Goal</h3>
+    <select name="career_goal">
+        <option>Data Analyst</option>
+        <option>Data Scientist</option>
+        <option>Software Developer</option>
+        <option>Machine Learning Engineer</option>
+        <option>Business Analyst</option>
+    </select>
+    <h3>Known Skills</h3>
+
+<div class="skills-grid">
+
+    <label class="skill-item">
+        <input type="checkbox" name="skills" value="Python">
+       <span class="skill-badge">Python</span>
+    </label>
+
+    <label class="skill-item">
+        <input type="checkbox" name="skills" value="Power BI">
+        <span class="skill-badge">Power BI</span>
+    </label>
+
+    <label class="skill-item">
+        <input type="checkbox" name="skills" value="Excel">
+        <span class="skill-badge">Excel</span>
+    </label>
+
+    <label class="skill-item">
+        <input type="checkbox" name="skills" value="Statistics">
+        <span class="skill-badge">Statistics</span>
+    </label>
+
+    <label class="skill-item">
+        <input type="checkbox" name="skills" value="SQL">
+        <span class="skill-badge">SQL</span>
+    </label>
+
+</div>
+
+
+
+    <br><br>
+    <button type="submit">
+        Generate Roadmap
+    </button>
+    {% if roadmap is not none %}
+
+<hr>
+{% if roadmap is not none %}
+
+<div class="summary-card">
+
+    <h3>🎯 Selected Career Goal</h3>
+    <p>{{ career_goal }}</p>
+
+    <h3>🛠 Selected Skills</h3>
+    <p>{{ ", ".join(selected_skills) }}</p>
+
+</div>
+{% endif %}
+<h2>Your Learning Roadmap</h2>
+
+<table border="1">
+
+    <tr>
+        <th>Course</th>
+        <th>Skill</th>
+        <th>Level</th>
+    </tr>
+
+    {% for row in roadmap.values %}
+
+    <tr>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>
+            {% if row[2] == "Beginner" %}
+            <span class="beginner">Beginner</span>
+            {% elif row[2] == "Intermediate" %}
+            <span class="intermediate">Intermediate</span>
+            {% else %}
+            <span class="advanced">Advanced</span>
+            {% endif %}
+        </td>
+    </tr>
+  
+    {% endfor %}
+</table>
+
+{% endif %}
+</form>
+</div>
+</body>
+</html>

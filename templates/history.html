@@ -1,0 +1,31 @@
+<html>
+<head>
+    <title>Roadmap History</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Roadmap History</h1>
+    <a href="/">
+        <button>Back to Home</button>
+    </a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Career Goal</th>
+            <th>Skills</th>
+            <th>Date</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>

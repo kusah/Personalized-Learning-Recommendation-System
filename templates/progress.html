@@ -1,0 +1,61 @@
+<html>
+<head>
+    <title>Course Progress</title>
+</head>
+<body>
+
+<h1>Course Progress</h1>
+<h2>Learning Progress</h2>
+
+<p>
+    Completed:
+    {{ completed_courses }}
+    /
+    {{ total_courses }}
+</p>
+
+<h3>
+    Progress:
+    {{ progress_percent }}%
+</h3>
+<div class="progress-bar">
+
+    <div
+        class="progress-fill"
+        style="width: {{ progress_percent }}%;">
+
+        {{ progress_percent }}%
+
+    </div>
+
+</div>
+<table border="1">
+
+<tr>
+    <th>ID</th>
+    <th>Course</th>
+    <th>Completed</th>
+</tr>
+
+{% for course in courses %}
+
+<tr>
+    <td>{{ course[0] }}</td>
+    <td>{{ course[1] }}</td>
+    <td>
+    {% if course[2] %}
+        ✅ Completed
+    {% else %}
+        <a href="/complete/{{ course[0] }}">
+            ⏳ Mark Complete
+        </a>
+    {% endif %}
+</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>

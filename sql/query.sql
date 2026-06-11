@@ -17,3 +17,14 @@ CREATE TABLE recommendations (
     course_id INT,
     recommendation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+SHOW tables;
+DESC recommendations;
+SELECT * FROM recommendations;
+
+CREATE TABLE roadmap_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    career_goal VARCHAR(100),
+    skills TEXT,
+    generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+SELECT * from roadmap_history;
