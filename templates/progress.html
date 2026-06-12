@@ -1,79 +1,93 @@
 <html>
 <head>
     <title>Course Progress</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<div class="progress-container">
+<div class="history-container">
 
     <h1>📚 Course Progress</h1>
 
-<p>
-    Completed:
-    {{ completed_courses }}
-    /
-    {{ total_courses }}
-</p>
+    <a href="/">
+        <button class="back-btn">
+            ← Back to Home
+        </button>
+    </a>
 
-<h3>
-    Progress:
-    {{ progress_percent }}%
-</h3>
-<div class="progress-section">
+    <div class="progress-card">
 
-    <div class="progress-info">
-        <span>
-            Completed:
-            {{ completed_courses }}/{{ total_courses }}
-        </span>
+        <div class="progress-info">
 
-        <span>
-            {{ progress_percent }}%
-        </span>
-    </div>
+            <span>
+                Completed:
+                {{ completed_courses }}/{{ total_courses }}
+            </span>
 
-    <div class="progress-bar">
-        <div
-            class="progress-fill"
-            style="width: {{ progress_percent }}%;">
+            <span>
+                Progress:
+                {{ progress_percent }}%
+            </span>
+
         </div>
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                style="width: {{ progress_percent }}%;">
+            </div>
+
+        </div>
+
     </div>
 
-</div>
+    <table class="history-table">
+
+        <tr>
+            <th>#</th>
+            <th>Course</th>
+            <th>Status</th>
+        </tr>
+
+        {% for course in courses %}
+
+        <tr>
+
+            <td>{{ loop.index }}</td>
+
+            <td>{{ course[1] }}</td>
+
+            <td>
+
+                {% if course[2] %}
+
+                    <span class="completed">
+                        ✅ Completed
+                    </span>
+
+                {% else %}
+
+                    <a
+                        href="/complete/{{ course[0] }}"
+                        class="complete-btn">
+
+                        ⏳ Mark Complete
+
+                    </a>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
 
 </div>
-<table class="progress-table">
 
-<tr>
-    <th>ID</th>
-    <th>Course</th>
-    <th>Completed</th>
-</tr>
-
-{% for course in courses %}
-
-<tr>
-    <td>{{ course[0] }}</td>
-    <td>{{ course[1] }}</td>
-    <td>
-    {% if course[2] %}
-        ✅ Completed
-    {% else %}
-        <a href="/complete/{{ course[0] }}">
-            ⏳ Mark Complete
-        </a>
-    {% endif %}
-</td>
-</tr>
-
-{% endfor %}
-
-</table>
-</div>
 </body>
-<a href="/">
-    <button class="btn">
-        ← Back to Home
-    </button>
-</a>
 </html>

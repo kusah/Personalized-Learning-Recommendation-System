@@ -9,26 +9,29 @@
 
 {% endif %}
     <title>Learning Recommendation System</title>
+    <div class="nav-buttons">
+
+    <a href="/">
+        <button class="back-btn">🏠 Home</button>
+    </a>
+
     <a href="/history">
-    <button type="button">
-        View History
-    </button>
-</a>
-<a href="/progress">
-    <button type="button">
-        View Progress
-    </button>
-</a>
-<a href="/dashboard">
-    <button type="button">
-        Dashboard
-    </button>
-</a>
-<a href="/logout">
-    <button type="button">
-        Logout
-    </button>
-</a>
+        <button class="back-btn">📜 History</button>
+    </a>
+
+    <a href="/progress">
+        <button class="back-btn">📚 Progress</button>
+    </a>
+
+    <a href="/dashboard">
+        <button class="back-btn">📊 Dashboard</button>
+    </a>
+
+    <a href="/logout">
+        <button class="back-btn">🚪 Logout</button>
+    </a>
+
+</div>
     <link rel="stylesheet"
     href="{{ url_for('static', filename='style.css') }}">
 

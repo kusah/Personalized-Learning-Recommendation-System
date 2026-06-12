@@ -242,3 +242,118 @@ hr{
 .btn:hover{
     background:#0d6efd;
 }
+.progress-card{
+    background:#f8f9fa;
+    padding:20px;
+    border-radius:12px;
+    margin:20px 0;
+}
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.progress-bar{
+    width:100%;
+    height:25px;
+    background:#ddd;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    background:#1877f2;
+    transition:0.5s;
+}
+
+.completed{
+    color:green;
+    font-weight:bold;
+}
+
+.complete-btn{
+    color:#1877f2;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.complete-btn:hover{
+    text-decoration:underline;
+}
+
+.back-btn{
+    background:#1877f2;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-bottom:20px;
+}
+
+.back-btn:hover{
+    background:#0d6efd;
+}
+
+.auth-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.auth-card{
+    width:400px;
+    background:white;
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.auth-card h1{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.auth-card form{
+    display:flex;
+    flex-direction:column;
+}
+
+.auth-card label{
+    font-weight:bold;
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
+.auth-card input,
+.auth-card select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    margin-bottom:10px;
+}
+
+.auth-btn{
+    background:#1877f2;
+    color:white;
+    border:none;
+    padding:12px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:15px;
+    font-size:16px;
+}
+
+.auth-btn:hover{
+    background:#0d6efd;
+}
+
+.auth-card p{
+    text-align:center;
+    margin-top:15px;
+}

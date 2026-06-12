@@ -1,55 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register</title>
+    <title>Student Registration</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<h1>Student Registration</h1>
+<div class="auth-container">
 
-<form method="POST">
+    <div class="auth-card">
 
-    <input
-        type="text"
-        name="student_name"
-        placeholder="Name"
-        required>
+        <h1>📝 Student Registration</h1>
 
-    <br><br>
+        <form method="POST">
 
-    <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        required>
+            <label>Name</label>
 
-    <br><br>
+            <input
+                type="text"
+                name="student_name"
+                placeholder="Enter Name"
+                required>
 
-    <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        required>
+            <label>Email</label>
 
-    <br><br>
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                required>
 
-    <select name="career_goal">
+            <label>Password</label>
 
-        <option>Data Analyst</option>
-        <option>Data Scientist</option>
-        <option>Software Developer</option>
-        <option>Business Analyst</option>
-        <option>Machine Learning Engineer</option>
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter Password"
+                required>
 
-    </select>
+            <label>Career Goal</label>
 
-    <br><br>
+            <select name="career_goal">
 
-    <button type="submit">
-        Register
-    </button>
+                <option>Data Analyst</option>
+                <option>Data Scientist</option>
+                <option>Software Developer</option>
+                <option>Business Analyst</option>
+                <option>Machine Learning Engineer</option>
 
-</form>
+            </select>
+
+            <button
+                type="submit"
+                class="auth-btn">
+
+                Register
+
+            </button>
+
+        </form>
+
+        <p>
+            Already have an account?
+
+            <a href="/login">
+                Login
+            </a>
+        </p>
+
+    </div>
+
+</div>
 
 </body>
 </html>

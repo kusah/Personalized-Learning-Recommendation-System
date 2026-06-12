@@ -1,6 +1,15 @@
 <head>
     <link rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}">
+      <h2>
+    Welcome,
+    {{ session["student_name"] }}
+</h2>
+<a href="/">
+    <button class="back-btn">
+        ← Back to Home
+    </button>
+</a>
 </head>
 <div class="dashboard-container">
 

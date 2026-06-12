@@ -143,32 +143,41 @@ def dashboard():
     if "student_id" not in session:
         return redirect("/login")
     cursor.execute(
-        "SELECT COUNT(*) FROM roadmap_history"
-    )
+    """
+    SELECT COUNT(*)
+    FROM roadmap_history
+    WHERE student_id = %s
+    """,
+    (session["student_id"],)
+)
     total_roadmaps = cursor.fetchone()[0]
 
     cursor.execute("""
-        SELECT career_goal, COUNT(*) as total
-        FROM roadmap_history
-        GROUP BY career_goal
-        ORDER BY total DESC
-        LIMIT 1
-    """)
+    SELECT career_goal, COUNT(*) as total
+    FROM roadmap_history
+    WHERE student_id = %s
+    GROUP BY career_goal
+    ORDER BY total DESC
+    LIMIT 1
+""",
+    (session["student_id"],))
 
     popular_goal = cursor.fetchone()
 
     cursor.execute("""
         SELECT COUNT(*)
         FROM course_progress
-        WHERE completed = TRUE
-    """)
+        WHERE student_id = %s
+AND completed = TRUE
+    """, (session["student_id"],))
     completed = cursor.fetchone()[0]
 
     cursor.execute("""
         SELECT COUNT(*)
         FROM course_progress
-        WHERE completed = FALSE
-    """)
+        WHERE student_id = %s
+AND completed = FALSE
+    """, (session["student_id"],))
     pending = cursor.fetchone()[0]
 
     return render_template(
