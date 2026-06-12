@@ -28,3 +28,14 @@ CREATE TABLE roadmap_history (
     generated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 SELECT * from roadmap_history;
+
+CREATE TABLE course_progress (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    course_name VARCHAR(200),
+    completed BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+SHOW TABLES;
+
+SELECT * from course_progress;

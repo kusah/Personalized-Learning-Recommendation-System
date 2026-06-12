@@ -1,5 +1,13 @@
 <html>
 <head>
+    {% if session.get("student_name") %}
+
+<h3>
+    Welcome,
+    {{ session["student_name"] }}
+</h3>
+
+{% endif %}
     <title>Learning Recommendation System</title>
     <a href="/history">
     <button type="button">
@@ -11,8 +19,19 @@
         View Progress
     </button>
 </a>
+<a href="/dashboard">
+    <button type="button">
+        Dashboard
+    </button>
+</a>
+<a href="/logout">
+    <button type="button">
+        Logout
+    </button>
+</a>
     <link rel="stylesheet"
     href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
 <h1>Personalized Learning Recommendation System</h1>

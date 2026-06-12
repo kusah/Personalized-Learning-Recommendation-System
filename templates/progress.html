@@ -4,8 +4,9 @@
 </head>
 <body>
 
-<h1>Course Progress</h1>
-<h2>Learning Progress</h2>
+<div class="progress-container">
+
+    <h1>📚 Course Progress</h1>
 
 <p>
     Completed:
@@ -18,18 +19,30 @@
     Progress:
     {{ progress_percent }}%
 </h3>
-<div class="progress-bar">
+<div class="progress-section">
 
-    <div
-        class="progress-fill"
-        style="width: {{ progress_percent }}%;">
+    <div class="progress-info">
+        <span>
+            Completed:
+            {{ completed_courses }}/{{ total_courses }}
+        </span>
 
-        {{ progress_percent }}%
+        <span>
+            {{ progress_percent }}%
+        </span>
+    </div>
 
+    <div class="progress-bar">
+        <div
+            class="progress-fill"
+            style="width: {{ progress_percent }}%;">
+        </div>
     </div>
 
 </div>
-<table border="1">
+
+</div>
+<table class="progress-table">
 
 <tr>
     <th>ID</th>
@@ -56,6 +69,11 @@
 {% endfor %}
 
 </table>
-
+</div>
 </body>
+<a href="/">
+    <button class="btn">
+        ← Back to Home
+    </button>
+</a>
 </html>
