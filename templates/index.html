@@ -2,13 +2,11 @@
 <head>
     {% if session.get("student_name") %}
 
-<h3>
-    Welcome,
-    {{ session["student_name"] }}
-</h3>
+
 
 {% endif %}
     <title>Learning Recommendation System</title>
+    <div class="navbuttons-container">
     <div class="nav-buttons">
 
     <a href="/">
@@ -27,10 +25,16 @@
         <button class="back-btn">📊 Dashboard</button>
     </a>
 
+    <a href="/profile">
+    <button type="button">👤 Profile</button>
+    </a>
+
     <a href="/logout">
         <button class="back-btn">🚪 Logout</button>
     </a>
+   
 
+</div>
 </div>
     <link rel="stylesheet"
     href="{{ url_for('static', filename='style.css') }}">
@@ -38,6 +42,9 @@
 </head>
 <body>
 <h1>Personalized Learning Recommendation System</h1>
+<h2 class="welcome-text">
+    Welcome, {{ session["student_name"] }} 👋
+</h2>
 <div class="container">
 <form method="POST">
     <h3>Career Goal</h3>
@@ -78,9 +85,6 @@
     </label>
 
 </div>
-
-
-
     <br><br>
     <button type="submit">
         Generate Roadmap

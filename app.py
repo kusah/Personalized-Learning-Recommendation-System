@@ -4,7 +4,8 @@ from machine_learning.recommendation import generate_roadmap
 from flask import redirect 
 import mysql.connector
 from flask import Flask, render_template, request, redirect, session
-
+from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -254,5 +255,71 @@ def logout():
     session.clear()
 
     return redirect("/login")
+@app.route("/profile")
+def profile():
+
+    if "student_id" not in session:
+        return redirect("/login")
+
+    student_id = session["student_id"]
+
+    # Student Details
+    cursor.execute("""
+        SELECT student_name,
+               email,
+               career_goal
+        FROM students
+        WHERE student_id = %s
+    """, (student_id,))
+
+    student = cursor.fetchone()
+
+    # Roadmaps Generated
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM roadmap_history
+        WHERE student_id = %s
+    """, (student_id,))
+
+    roadmap_count = cursor.fetchone()[0]
+
+    # Completed Courses
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM course_progress
+        WHERE student_id = %s
+        AND completed = TRUE
+    """, (student_id,))
+
+    completed_count = cursor.fetchone()[0]
+
+    # Pending Courses
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM course_progress
+        WHERE student_id = %s
+        AND completed = FALSE
+    """, (student_id,))
+
+    pending_count = cursor.fetchone()[0]
+
+    total_courses = completed_count + pending_count
+
+    progress = 0
+
+    if total_courses > 0:
+        progress = round(
+        completed_count * 100 / total_courses,
+        2
+    )
+
+    return render_template(
+        "profile.html",
+        student=student,
+        roadmap_count=roadmap_count,
+        completed_count=completed_count,
+        pending_count=pending_count,
+        progress=progress
+    )
 if __name__ == "__main__":
     app.run(debug=True)

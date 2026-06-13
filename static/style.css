@@ -357,3 +357,58 @@ hr{
     text-align:center;
     margin-top:15px;
 }
+.welcome-text{
+    text-align:center;
+    color:#1877f2;
+    margin-bottom:30px;
+}
+.profile-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-bottom:30px;
+}
+.progress-card h2{
+    color:green;
+}
+
+.nav-buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.nav-buttons a{
+    text-decoration: none;
+    background: #1877f2;
+    color: white;
+
+    padding: 8px 14px;      /* smaller */
+    border-radius: 6px;
+
+    font-size: 14px;        /* smaller text */
+    font-weight: 600;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 90px;        /* reduce width */
+    height: 36px;           /* reduce height */
+
+    transition: 0.3s;
+}
+
+
+.nav-buttons a:hover{
+    background:#0d6efd;
+}
+.navbuttons-container{
+    background:white;
+    padding:12px;
+    border-radius:12px;
+    width:fit-content;
+    margin:20px auto;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
