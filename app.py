@@ -182,12 +182,15 @@ AND completed = FALSE
     pending = cursor.fetchone()[0]
 
     return render_template(
-        "dashboard.html",
-        total_roadmaps=total_roadmaps,
-        popular_goal=popular_goal,
-        completed=completed,
-        pending=pending
-    )
+    "dashboard.html",
+    total_roadmaps=total_roadmaps,
+    popular_goal=popular_goal,
+    completed=completed,
+    pending=pending,
+
+    chart_labels=["Completed", "Pending"],
+    chart_values=[completed, pending]
+)
 @app.route("/register", methods=["GET", "POST"])
 def register():
 
@@ -197,20 +200,20 @@ def register():
         career_goal = request.form["career_goal"]
         email = request.form["email"]
         password = request.form["password"]
-
+        hashed_password = generate_password_hash(password)
         cursor.execute(
-            """
-            INSERT INTO students
-            (student_name, career_goal, email, password)
-            VALUES (%s, %s, %s, %s)
-            """,
-            (
-                student_name,
-                career_goal,
-                email,
-                password
+                        """
+                        INSERT INTO students
+                        (student_name, career_goal, email, password)
+                        VALUES (%s, %s, %s, %s)
+                    """,
+                (
+                    student_name,
+                    career_goal,
+                    email,
+                    hashed_password
+                )
             )
-        )
 
         db.commit()
 
@@ -230,14 +233,16 @@ def login():
             SELECT *
             FROM students
             WHERE email = %s
-            AND password = %s
             """,
-            (email, password)
+            (email,)
         )
 
         student = cursor.fetchone()
 
-        if student:
+        if student and check_password_hash(
+            student[4],
+            password
+        ):
 
             session["student_id"] = student[0]
             session["student_name"] = student[1]

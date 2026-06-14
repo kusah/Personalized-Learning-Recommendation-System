@@ -1,16 +1,21 @@
 <head>
+    <title>Dashboard</title>
+
     <link rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}">
-      <h2>
-    Welcome,
-    {{ session["student_name"] }}
+</head>
+
+<body>
+
+<h2 class="welcome-text">
+    Welcome, {{ session["student_name"] }} 👋
 </h2>
+
 <a href="/">
     <button class="back-btn">
         ← Back to Home
     </button>
 </a>
-</head>
 <div class="dashboard-container">
 
     <h1>📊 Analytics Dashboard</h1>
@@ -24,7 +29,13 @@
 
         <div class="card">
             <h3>Popular Career Goal</h3>
-            <p>{{ popular_goal[0] }}</p>
+            <p>
+{% if popular_goal %}
+    {{ popular_goal[0] }}
+{% else %}
+    No Roadmaps Yet
+{% endif %}
+</p>
         </div>
 
         <div class="card">
@@ -38,5 +49,39 @@
         </div>
 
     </div>
+    <div class="chart-container">
+
+    <h2>📊 Course Status</h2>
+
+    <canvas id="courseChart"></canvas>
 
 </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const ctx = document.getElementById('courseChart');
+
+    new Chart(ctx, {
+        type: 'doughnut',
+
+        data: {
+            labels: {{ chart_labels | tojson }},
+
+            datasets: [{
+                data: {{ chart_values | tojson }},
+
+                backgroundColor: [
+                    '#28a745',
+                    '#ffc107'
+                ]
+            }]
+        },
+
+    options: {
+        responsive: true
+    }
+});
+
+</script>
+</body>
