@@ -1,87 +1,124 @@
-<head>
-    <title>Dashboard</title>
+<!DOCTYPE html>
 
-    <link rel="stylesheet"
+<html>
+
+<head>
+    <title>Dashboard | LearnAI</title>
+
+<link rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}">
+
+
 </head>
 
-<body>
+<body class="dashboard-page">
 
-<h2 class="welcome-text">
-    Welcome, {{ session["student_name"] }} 👋
-</h2>
+<div class="dashboard-header">
 
-<a href="/">
-    <button class="back-btn">
-        ← Back to Home
-    </button>
-</a>
+    <div>
+        <h2 class="welcome-text">
+            👋 Welcome, {{ session["student_name"] }}
+        </h2>
+
+        <p class="dashboard-subtitle">
+            Track your learning journey and achievements
+        </p>
+    </div>
+
+    <a href="/home" class="nav-btn">
+        🏠 Back to Home
+    </a>
+
+</div>
+
 <div class="dashboard-container">
 
-    <h1>📊 Analytics Dashboard</h1>
+    <h1 class="dashboard-title">
+        📊 Analytics Dashboard
+    </h1>
 
     <div class="cards">
 
         <div class="card">
+            <div class="card-icon">🗺️</div>
             <h3>Total Roadmaps</h3>
             <p>{{ total_roadmaps }}</p>
         </div>
 
         <div class="card">
+            <div class="card-icon">🎯</div>
             <h3>Popular Career Goal</h3>
+
             <p>
-{% if popular_goal %}
-    {{ popular_goal[0] }}
-{% else %}
-    No Roadmaps Yet
-{% endif %}
-</p>
+                {% if popular_goal %}
+                    {{ popular_goal[0] }}
+                {% else %}
+                    No Roadmaps Yet
+                {% endif %}
+            </p>
         </div>
 
         <div class="card">
+            <div class="card-icon">✅</div>
             <h3>Completed Courses</h3>
             <p>{{ completed }}</p>
         </div>
 
         <div class="card">
+            <div class="card-icon">⏳</div>
             <h3>Pending Courses</h3>
             <p>{{ pending }}</p>
         </div>
 
     </div>
+
     <div class="chart-container">
 
-    <h2>📊 Course Status</h2>
+        <h2>📈 Course Completion Status</h2>
 
-    <canvas id="courseChart"></canvas>
+        <canvas id="courseChart"></canvas>
+
+    </div>
 
 </div>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
 
 const ctx = document.getElementById('courseChart');
 
-    new Chart(ctx, {
-        type: 'doughnut',
+new Chart(ctx, {
+    type: 'doughnut',
 
-        data: {
-            labels: {{ chart_labels | tojson }},
+    data: {
+        labels: {{ chart_labels | tojson }},
 
-            datasets: [{
-                data: {{ chart_values | tojson }},
+        datasets: [{
+            data: {{ chart_values | tojson }},
 
-                backgroundColor: [
-                    '#28a745',
-                    '#ffc107'
-                ]
-            }]
-        },
+            backgroundColor: [
+                '#22c55e',
+                '#f59e0b'
+            ],
+
+            borderWidth: 0
+        }]
+    },
 
     options: {
-        responsive: true
+        responsive: true,
+
+        plugins: {
+            legend: {
+                position: 'bottom'
+            }
+        }
     }
 });
 
 </script>
+
 </body>
+
+</html>

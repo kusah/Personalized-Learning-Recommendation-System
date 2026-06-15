@@ -1,24 +1,30 @@
-from flask import Flask, render_template, request
-from sqlalchemy import values
 from machine_learning.recommendation import generate_roadmap
 from flask import redirect 
 import mysql.connector
 from flask import Flask, render_template, request, redirect, session
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="sah123",
-    database="learning_recommendation_db"
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME")
 )
 
 cursor = db.cursor()
 
 app = Flask(__name__)
-app.secret_key = "learning_recommendation_secret"
+app.secret_key = os.getenv("SECRET_KEY")
+@app.route("/")
+def landing():
+    return render_template("landing.html")
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/home", methods=["GET", "POST"])
 def home():
     if "student_id" not in session:
         return redirect("/login")
@@ -99,7 +105,8 @@ def progress():
         SELECT *
         FROM course_progress
         WHERE student_id = %s
-    """, (session["student_id"],))
+        """, 
+    (session["student_id"],))
 
     courses = cursor.fetchall()
 
@@ -132,10 +139,12 @@ def complete(id):
         UPDATE course_progress
         SET completed = TRUE
         WHERE id = %s
+        AND student_id = %s
         """,
-        (id,)
+        (id, session["student_id"])
     )
-
+    if "student_id" not in session:
+        return redirect("/login")
     db.commit()
 
     return redirect("/progress")
@@ -202,18 +211,31 @@ def register():
         password = request.form["password"]
         hashed_password = generate_password_hash(password)
         cursor.execute(
-                        """
-                        INSERT INTO students
-                        (student_name, career_goal, email, password)
-                        VALUES (%s, %s, %s, %s)
-                    """,
-                (
-                    student_name,
-                    career_goal,
-                    email,
-                    hashed_password
-                )
-            )
+                """
+                SELECT *
+                FROM students
+                WHERE email = %s
+                """,
+                (email,)
+        )
+
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            return "Email already exists"
+        cursor.execute(
+    """
+    INSERT INTO students
+    (student_name, career_goal, email, password)
+    VALUES (%s, %s, %s, %s)
+    """,
+    (
+        student_name,
+        career_goal,
+        email,
+        hashed_password
+    )
+)
 
         db.commit()
 
@@ -247,7 +269,7 @@ def login():
             session["student_id"] = student[0]
             session["student_name"] = student[1]
 
-            return redirect("/")
+            return redirect("/home")
 
         else:
 

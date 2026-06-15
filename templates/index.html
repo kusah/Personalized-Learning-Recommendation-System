@@ -1,140 +1,196 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    {% if session.get("student_name") %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnAI Dashboard</title>
 
-
-
-{% endif %}
-    <title>Learning Recommendation System</title>
-    <div class="navbuttons-container">
-    <div class="nav-buttons">
-
-    <a href="/">
-        <button class="back-btn">🏠 Home</button>
-    </a>
-
-    <a href="/history">
-        <button class="back-btn">📜 History</button>
-    </a>
-
-    <a href="/progress">
-        <button class="back-btn">📚 Progress</button>
-    </a>
-
-    <a href="/dashboard">
-        <button class="back-btn">📊 Dashboard</button>
-    </a>
-
-    <a href="/profile">
-    <button type="button">👤 Profile</button>
-    </a>
-
-    <a href="/logout">
-        <button class="back-btn">🚪 Logout</button>
-    </a>
-   
-
-</div>
-</div>
     <link rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}">
-
+        href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-<h1>Personalized Learning Recommendation System</h1>
-<h2 class="welcome-text">
-    Welcome, {{ session["student_name"] }} 👋
-</h2>
-<div class="container">
-<form method="POST">
-    <h3>Career Goal</h3>
-    <select name="career_goal">
-        <option>Data Analyst</option>
-        <option>Data Scientist</option>
-        <option>Software Developer</option>
-        <option>Machine Learning Engineer</option>
-        <option>Business Analyst</option>
-    </select>
-    <h3>Known Skills</h3>
 
-<div class="skills-grid">
+<body class="index-page">
+<div class="index-container">
+    <!-- Navigation -->
+    <div class="navbuttons-container">
+        <div class="nav-buttons">
 
-    <label class="skill-item">
-        <input type="checkbox" name="skills" value="Python">
-       <span class="skill-badge">Python</span>
-    </label>
+            <a href="/home">
+                <button class="back-btn">🏠 Home</button>
+            </a>
 
-    <label class="skill-item">
-        <input type="checkbox" name="skills" value="Power BI">
-        <span class="skill-badge">Power BI</span>
-    </label>
+            <a href="/history">
+                <button class="back-btn">📜 History</button>
+            </a>
 
-    <label class="skill-item">
-        <input type="checkbox" name="skills" value="Excel">
-        <span class="skill-badge">Excel</span>
-    </label>
+            <a href="/progress">
+                <button class="back-btn">📈 Progress</button>
+            </a>
 
-    <label class="skill-item">
-        <input type="checkbox" name="skills" value="Statistics">
-        <span class="skill-badge">Statistics</span>
-    </label>
+            <a href="/dashboard">
+                <button class="back-btn">📊 Dashboard</button>
+            </a>
 
-    <label class="skill-item">
-        <input type="checkbox" name="skills" value="SQL">
-        <span class="skill-badge">SQL</span>
-    </label>
+            <a href="/profile">
+                <button class="back-btn">👤 Profile</button>
+            </a>
 
-</div>
-    <br><br>
-    <button type="submit">
-        Generate Roadmap
-    </button>
-    {% if roadmap is not none %}
+            <a href="/logout">
+                <button class="back-btn">🚪 Logout</button>
+            </a>
 
-<hr>
-{% if roadmap is not none %}
+        </div>
+    </div>
 
-<div class="summary-card">
+    <!-- Welcome Section -->
+    <div class="hero-section">
 
-    <h3>🎯 Selected Career Goal</h3>
-    <p>{{ career_goal }}</p>
+        <h1>🚀 Build Your Career Roadmap</h1>
 
-    <h3>🛠 Selected Skills</h3>
-    <p>{{ ", ".join(selected_skills) }}</p>
+        <p>
+            Welcome, {{ session["student_name"] }} 👋
+        </p>
 
-</div>
-{% endif %}
-<h2>Your Learning Roadmap</h2>
+        <p>
+            Select your career goal and skills to generate a personalized learning roadmap.
+        </p>
 
-<table border="1">
+    </div>
 
-    <tr>
-        <th>Course</th>
-        <th>Skill</th>
-        <th>Level</th>
-    </tr>
+    <!-- Main Container -->
+    <div class="container">
 
-    {% for row in roadmap.values %}
+        <form method="POST" class="roadmap-form">
 
-    <tr>
-        <td>{{ row[0] }}</td>
-        <td>{{ row[1] }}</td>
-        <td>
-            {% if row[2] == "Beginner" %}
-            <span class="beginner">Beginner</span>
-            {% elif row[2] == "Intermediate" %}
-            <span class="intermediate">Intermediate</span>
-            {% else %}
-            <span class="advanced">Advanced</span>
-            {% endif %}
-        </td>
-    </tr>
-  
-    {% endfor %}
-</table>
+            <h3>🎯 Career Goal</h3>
 
-{% endif %}
-</form>
+            <select name="career_goal" required>
+                <option>Data Analyst</option>
+                <option>Data Scientist</option>
+                <option>Software Developer</option>
+                <option>Machine Learning Engineer</option>
+                <option>Business Analyst</option>
+            </select>
+
+            <h3>🛠 Known Skills</h3>
+
+            <div class="skills-grid">
+
+                <label class="skill-item">
+                    <input type="checkbox" name="skills" value="Python">
+                    <span class="skill-badge">Python</span>
+                </label>
+
+                <label class="skill-item">
+                    <input type="checkbox" name="skills" value="SQL">
+                    <span class="skill-badge">SQL</span>
+                </label>
+
+                <label class="skill-item">
+                    <input type="checkbox" name="skills" value="Excel">
+                    <span class="skill-badge">Excel</span>
+                </label>
+
+                <label class="skill-item">
+                    <input type="checkbox" name="skills" value="Power BI">
+                    <span class="skill-badge">Power BI</span>
+                </label>
+
+                <label class="skill-item">
+                    <input type="checkbox" name="skills" value="Statistics">
+                    <span class="skill-badge">Statistics</span>
+                </label>
+
+            </div>
+
+            <br>
+
+            <button type="submit" class="generate-btn">
+                ✨ Generate Roadmap
+            </button>
+
+        </form>
+
+        <!-- Roadmap Results -->
+        {% if roadmap is not none %}
+
+        <div class="summary-card">
+
+            <h2>📋 Roadmap Summary</h2>
+
+            <p>
+                <strong>Career Goal:</strong>
+                {{ career_goal }}
+            </p>
+
+            <p>
+                <strong>Selected Skills:</strong>
+                {{ ", ".join(selected_skills) }}
+            </p>
+
+        </div>
+
+        <div class="roadmap-section">
+
+            <h2>📚 Your Learning Roadmap</h2>
+
+            {% for row in roadmap.values %}
+
+            <div class="roadmap-card">
+
+                <h3>{{ row[0] }}</h3>
+
+                <p>
+                    <strong>Skill:</strong>
+                    {{ row[1] }}
+                </p>
+
+                {% if row[2] == "Beginner" %}
+
+                <span class="beginner">
+                    Beginner
+                </span>
+
+                {% elif row[2] == "Intermediate" %}
+
+                <span class="intermediate">
+                    Intermediate
+                </span>
+
+                {% else %}
+
+                <span class="advanced">
+                    Advanced
+                </span>
+
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+        <!-- Future Feature -->
+        <div class="resume-card">
+
+            <h3>📄 Resume Analyzer</h3>
+
+            <p>
+                Upload your resume and let AI identify skill gaps and generate a roadmap automatically.
+            </p>
+
+            <button disabled>
+                Coming Soon 🚀
+            </button>
+
+        </div>
+
+    </div>
 </div>
 </body>
+
 </html>

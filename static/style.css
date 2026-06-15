@@ -8,10 +8,9 @@ body{
 .container{
     max-width:1000px;
     margin:auto;
-    background:white;
-    padding:40px;
-    border-radius:15px;
-    box-shadow:0 0 15px rgba(0,0,0,0.1);
+    background:transparent;
+    box-shadow:none;
+    padding:0;
 }
 
 h1{
@@ -425,4 +424,548 @@ hr{
     max-width:350px;
     max-height:350px;
     margin:auto;
+}
+.landing-body{
+    background: radial-gradient(
+        circle at top right,
+        rgba(124,58,237,0.35),
+        transparent 30%
+    ),
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+
+    color:white;
+    min-height:100vh;
+}
+
+.hero{
+    text-align:center;
+    margin-top:120px;
+}
+
+.hero p{
+    max-width:700px;
+    margin:20px auto;
+    color:#cbd5e1;
+    font-size:20px;
+}
+
+.hero h1{
+    font-size: 72px;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+
+.secondary-btn{
+    background:#7c3aed;
+}
+
+.features{
+    margin-top:100px;
+
+    display:flex;
+    justify-content:center;
+    gap:30px;
+
+    flex-wrap:wrap;
+}
+
+.feature-card{
+    width:300px;
+
+    background:rgba(255,255,255,0.08);
+
+    padding:25px;
+
+    border-radius:15px;
+
+    backdrop-filter:blur(10px);
+
+    text-align:center;
+    transition: all 0.3s ease;
+}
+.feature-card:hover{
+    transform:translateY(-10px);
+
+    box-shadow:
+        0 15px 40px rgba(124,58,237,0.25);
+}
+
+.stats{
+    margin-top:60px;
+
+    display:flex;
+    justify-content:center;
+    gap:100px;
+
+    text-align:center;
+}
+.stats div h2{
+    color:white;
+    font-size:40px;
+}
+
+.stats div p{
+    color:#cbd5e1;
+}
+.landing-nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:30px 60px;
+}
+
+.nav-btn{
+    text-decoration:none;
+    color:white;
+    background:#2563eb;
+    padding:10px 20px;
+    border-radius:8px;
+    margin-left:10px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.nav-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(37,99,235,0.4);
+}
+
+.signup-btn{
+    background:#7c3aed;
+}
+.landing-footer{
+    text-align:center;
+    margin-top:100px;
+    color:#94a3b8;
+}
+html{
+    scroll-behavior:smooth;
+}
+.logo{
+    transition:0.3s;
+}
+
+.logo:hover{
+    transform:scale(1.05);
+}
+
+/* LOGIN + REGISTER */
+
+.auth-body{
+    background:
+    radial-gradient(
+        circle at top right,
+        rgba(124,58,237,0.35),
+        transparent 30%
+    ),
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.auth-card{
+
+    width:460px;
+    padding:50px;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:20px;
+
+    padding:40px;
+
+    text-align:center;
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,0.3);
+}
+
+.auth-card h1{
+    color:white;
+    margin-bottom:10px;
+}
+
+.auth-card p{
+    color:#cbd5e1;
+    margin-bottom:30px;
+}
+
+.auth-card form{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.auth-card input{
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:16px;
+}
+
+.auth-card button{
+
+    background:
+    linear-gradient(
+        90deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color:white;
+
+    border:none;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    transition:0.3s;
+}
+
+.auth-card button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 25px rgba(124,58,237,0.4);
+}
+
+.auth-footer{
+
+    margin-top:20px;
+
+    color:white;
+}
+
+.auth-footer a{
+
+    color:#60a5fa;
+
+    text-decoration:none;
+
+    font-weight:bold;
+}
+.auth-logo{
+    color:white;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+.back-home{
+    position:absolute;
+    top:30px;
+    left:40px;
+
+    color:white;
+    text-decoration:none;
+}
+.auth-card input::placeholder{
+    color:#64748b;
+}
+.auth-card label{
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 8px;
+}
+/* Dashboard Page */
+.dashboard-page{
+    min-height:100vh;
+    background: linear-gradient(
+        135deg,
+        #071225 0%,
+        #102042 60%,
+        #3d2b78 100%
+    );
+    color:white;
+    padding:40px;
+}
+
+/* Header */
+.dashboard-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:50px;
+}
+
+.welcome-text{
+    color:white;
+    margin:0;
+    font-size:30px;
+}
+
+.dashboard-subtitle{
+    color:#b7c3d8;
+    margin-top:8px;
+}
+
+/* Button */
+.nav-btn{
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #7c3aed
+    );
+    color:white;
+    padding:12px 22px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* Dashboard title */
+.dashboard-title{
+    text-align:center;
+    color:white;
+    margin-bottom:40px;
+}
+
+/* Cards */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    border-radius:18px;
+    padding:30px;
+    text-align:center;
+    color:white;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card-icon{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.card h3{
+    color:#d7def0;
+}
+
+.card p{
+    color:white;
+    font-size:28px;
+    font-weight:bold;
+}
+
+/* Chart */
+.chart-container{
+    margin-top:40px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:30px;
+    width:70%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.chart-container h2{
+    text-align:center;
+    color:white;
+}
+
+#courseChart{
+    max-width:400px;
+    max-height:400px;
+    margin:auto;
+}
+.hero-section{
+    text-align:center;
+    margin:40px 0;
+}
+
+.hero-section h1{
+    color:white;
+    font-size:48px;
+}
+
+.hero-section p{
+    color:#cbd5e1;
+}
+
+.roadmap-card{
+    background:rgba(255,255,255,0.08);
+    border-radius:15px;
+    padding:20px;
+    margin:15px 0;
+    color:white;
+    transition:0.3s;
+}
+
+.roadmap-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 20px rgba(124,58,237,0.4);
+}
+
+.generate-btn{
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+}
+
+/* INDEX PAGE */
+
+.index-page{
+    min-height:100vh;
+
+    background:
+    radial-gradient(
+        circle at top right,
+        rgba(124,58,237,0.35),
+        transparent 30%
+    ),
+    linear-gradient(
+        135deg,
+        #071225,
+        #102042,
+        #3d2b78
+    );
+
+    color:white;
+    padding:40px;
+}
+
+.index-container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.roadmap-form{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    max-width:600px;
+    margin:auto;
+    border-radius:20px;
+    padding:35px;
+    transition:0.3s;
+    color:white;
+
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+.roadmap-form h3{
+    color:white;
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+.roadmap-form select{
+    width:100%;
+}
+.roadmap-form:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 40px rgba(124,58,237,0.4);
+}
+.generate-btn{
+    width:100%;
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #7c3aed
+    );
+}
+
+.generate-btn:hover{
+    transform:translateY(-2px);
+}
+
+.summary-card{
+    background:rgba(255,255,255,0.08);
+    color:white;
+    border-left:none;
+    margin-top:20px;
+}
+
+table{
+    background:rgba(255,255,255,0.08);
+    color:white;
+}
+
+td{
+    color:white;
+}
+
+.hero-section{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.hero-section h1{
+    font-size:56px;
+    font-weight:800;
+    margin-bottom:20px;
+}
+
+.hero-section p{
+    color:#cbd5e1;
+}
+.resume-card{
+    margin-top:20px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:15px;
+    max-width:650px;
+    margin: 20px auto;
+    color:white;
+    transition:0.3s;
+}
+.skill-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:12px;
+}
+
+.skill-badge{
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #7c3aed
+    );
+}
+.resume-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 40px rgba(124,58,237,0.4);
 }

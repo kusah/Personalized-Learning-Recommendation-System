@@ -39,3 +39,16 @@ CREATE TABLE course_progress (
 SHOW TABLES;
 
 SELECT * from course_progress;
+
+DESC students;
+ALTER TABLE students
+ADD email VARCHAR(100) UNIQUE,
+ADD password VARCHAR(255);
+
+SELECT * from roadmap_history;
+ALTER TABLE roadmap_history ADD student_id INT;
+ALTER TABLE course_progress ADD student_id INT;
+DELETE FROM students WHERE email='kunalsah3108@gmail.com';
+
+ALTER TABLE students AUTO_INCREMENT = 1;
+TRUNCATE TABLE course_progress;
