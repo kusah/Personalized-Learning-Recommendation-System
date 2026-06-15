@@ -1,91 +1,137 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Course Progress</title>
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
 
-<div class="history-container">
+<body class="dashboard-page">
 
-    <h1>📚 Course Progress</h1>
+<div class="dashboard-header">
 
-    <a href="/">
-        <button class="back-btn">
-            ← Back to Home
-        </button>
+    <div>
+        <h2 class="welcome-text">
+            📚 Course Progress
+        </h2>
+
+        <p class="dashboard-subtitle">
+            Track your learning journey and completed courses
+        </p>
+    </div>
+
+    <a href="/home" class="nav-btn">
+        🏠 Back to Home
     </a>
 
-    <div class="progress-card">
+</div>
 
-        <div class="progress-info">
+<div class="dashboard-container">
 
-            <span>
-                Completed:
-                {{ completed_courses }}/{{ total_courses }}
-            </span>
+    <div class="chart-container">
 
-            <span>
-                Progress:
-                {{ progress_percent }}%
-            </span>
+        <h2>📈 Learning Progress</h2>
 
-        </div>
+        <div class="progress-card">
 
-        <div class="progress-bar">
+            <div class="progress-info">
 
-            <div
-                class="progress-fill"
-                style="width: {{ progress_percent }}%;">
+                <span>
+                    Completed:
+                    {{ completed_courses }}/{{ total_courses }}
+                </span>
+
+                <span>
+                    {{ progress_percent }}%
+                </span>
+
+            </div>
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    style="width: {{ progress_percent }}%;">
+                </div>
+
             </div>
 
         </div>
 
     </div>
 
-    <table class="history-table">
+    <div class="chart-container">
 
-        <tr>
-            <th>#</th>
-            <th>Course</th>
-            <th>Status</th>
-        </tr>
+        <h2>📖 Course Status</h2>
 
-        {% for course in courses %}
+        {% if courses %}
 
-        <tr>
+        <table class="history-table">
 
-            <td>{{ loop.index }}</td>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
 
-            <td>{{ course[1] }}</td>
+            <tbody>
 
-            <td>
+                {% for course in courses %}
 
-                {% if course[2] %}
+                <tr>
 
-                    <span class="completed">
-                        ✅ Completed
-                    </span>
+                    <td>{{ loop.index }}</td>
 
-                {% else %}
+                    <td>{{ course[1] }}</td>
 
-                    <a
-                        href="/complete/{{ course[0] }}"
-                        class="complete-btn">
+                    <td>
 
-                        ⏳ Mark Complete
+                        {% if course[2] %}
 
-                    </a>
+                            <span class="completed">
+                                ✅ Completed
+                            </span>
 
-                {% endif %}
+                        {% else %}
 
-            </td>
+                            <a
+                                href="/complete/{{ course[0] }}"
+                                class="complete-btn">
 
-        </tr>
+                                ⏳ Mark Complete
 
-        {% endfor %}
+                            </a>
 
-    </table>
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <div style="text-align:center;padding:40px;color:white;">
+
+            <h3>📭 No Courses Yet</h3>
+
+            <p>
+                Generate a roadmap first to start tracking progress.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
 
 </div>
 

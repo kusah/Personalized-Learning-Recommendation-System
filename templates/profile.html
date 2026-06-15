@@ -1,71 +1,103 @@
-<!DOCTYPE html>
 <html>
 <head>
     <title>Profile</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
 
-<div class="dashboard-container">
+<body class="dashboard-page">
 
-    <h1>👤 Student Profile</h1>
+<div class="dashboard-header">
 
-    <h2 class="welcome-text">
-        Welcome, {{ student[0] }} 👋
-    </h2>
-    <div class="profile-buttons">
+    <div>
+        <h2 class="welcome-text">
+            👋 Welcome, {{ student[0] }}
+        </h2>
 
-    <a href="/">
-        <button class="back-btn">
-            ← Back to Home
-        </button>
-    </a>
+        <p class="dashboard-subtitle">
+            View your learning journey and achievements
+        </p>
+    </div>
 
-    <a href="/logout">
-        <button class="logout-btn">
-            🚪 Logout
-        </button>
+    <a href="/home" class="nav-btn">
+        🏠 Back to Home
     </a>
 
 </div>
-    </a>
+
+<div class="dashboard-container">
+
+    <h1 class="dashboard-title">
+        👤 Student Profile
+    </h1>
 
     <div class="cards">
 
         <div class="card">
+            <div class="card-icon">👤</div>
             <h3>Name</h3>
             <p>{{ student[0] }}</p>
         </div>
 
         <div class="card">
+            <div class="card-icon">📧</div>
             <h3>Email</h3>
             <p>{{ student[1] }}</p>
         </div>
 
         <div class="card">
+            <div class="card-icon">🎯</div>
             <h3>Career Goal</h3>
             <p>{{ student[2] }}</p>
         </div>
 
         <div class="card">
+            <div class="card-icon">🗺️</div>
             <h3>Roadmaps Generated</h3>
             <p>{{ roadmap_count }}</p>
         </div>
 
         <div class="card">
+            <div class="card-icon">✅</div>
             <h3>Completed Courses</h3>
             <p>{{ completed_count }}</p>
         </div>
 
         <div class="card">
+            <div class="card-icon">⏳</div>
             <h3>Pending Courses</h3>
             <p>{{ pending_count }}</p>
         </div>
-        <div class="card">
-            <h3>Progress</h3>
-            <p>{{ progress }}%</p>
+
+    </div>
+
+    <div class="chart-container">
+
+        <h2>📈 Learning Progress</h2>
+
+        <div class="progress-card">
+
+            <div class="progress-info">
+                <span>Progress</span>
+                <span>{{ progress }}%</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill"
+                     style="width: {{ progress }}%;">
+                </div>
+            </div>
+
         </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:30px;">
+
+        <a href="/logout" class="nav-btn">
+            🚪 Logout
+        </a>
 
     </div>
 

@@ -1,31 +1,73 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Roadmap History</title>
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-<div class="container">
-    <h1>Roadmap History</h1>
-    <a href="/">
-        <button>Back to Home</button>
+
+<body class="dashboard-page">
+
+<div class="dashboard-header">
+
+    <div>
+        <h2 class="welcome-text">
+            📜 Roadmap History
+        </h2>
+
+        <p class="dashboard-subtitle">
+            View all previously generated learning roadmaps
+        </p>
+    </div>
+
+    <a href="/home" class="nav-btn">
+        🏠 Back to Home
     </a>
-    <table>
-        <tr>
-            <th>#</th>
-            <th>Career Goal</th>
-            <th>Skills</th>
-            <th>Date</th>
-        </tr>
-        {% for row in rows %}
-        <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+
 </div>
+
+<div class="dashboard-container">
+
+    <div class="chart-container">
+
+        <h2>📚 Generated Roadmaps</h2>
+
+        <table class="history-table">
+
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Career Goal</th>
+                    <th>Skills</th>
+                    <th>Date Generated</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for row in rows %}
+
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                </tr>
+                {% else %}
+    <div style="text-align:center;padding:40px;">
+        <h3>📭 No Roadmaps Generated Yet</h3>
+        <p>Generate your first roadmap to see history here.</p>
+    </div>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
 </body>
 </html>

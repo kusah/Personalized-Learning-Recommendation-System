@@ -946,7 +946,7 @@ td{
     border:1px solid rgba(255,255,255,0.1);
     padding:20px;
     border-radius:15px;
-    max-width:650px;
+    max-width:600px;
     margin: 20px auto;
     color:white;
     transition:0.3s;
@@ -968,4 +968,131 @@ td{
 .resume-card:hover{
     transform:translateY(-5px);
     box-shadow:0 15px 40px rgba(124,58,237,0.4);
+}
+.welcome-card{
+    max-width:650px;
+    margin:20px auto;
+
+    background:rgba(255,255,255,0.06);
+
+    border-radius:15px;
+    padding:20px;
+
+    text-align:center;
+    color:white;
+}
+.skill-item input:checked + .skill-badge{
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    box-shadow:
+        0 0 15px rgba(124,58,237,0.5);
+}
+.progress-card{
+    margin-top:20px;
+}
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    color:white;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.progress-bar{
+    width:100%;
+    height:25px;
+
+    background:rgba(255,255,255,0.15);
+
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        #22c55e,
+        #3b82f6
+    );
+
+    border-radius:20px;
+}
+
+/* HISTORY PAGE */
+
+.history-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    color:white;
+}
+
+.history-table th{
+    background:rgba(255,255,255,0.12);
+
+    color:white;
+
+    padding:15px;
+
+    text-align:left;
+}
+
+.history-table td{
+    padding:15px;
+
+    border-bottom:
+    1px solid rgba(255,255,255,0.1);
+
+    color:#e2e8f0;
+}
+
+.history-table tr:hover{
+    background:
+    rgba(255,255,255,0.05);
+}
+
+.history-table tbody tr{
+    transition:0.3s;
+}
+.completed{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+.complete-btn{
+    color:#60a5fa;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.complete-btn:hover{
+    color:#93c5fd;
+    text-decoration:underline;
+}
+
+.progress-fill{
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        #22c55e,
+        #3b82f6
+    );
+
+    border-radius:20px;
+}
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    color:white;
+    font-weight:bold;
+    margin-bottom:12px;
 }
