@@ -1,0 +1,110 @@
+
+<html>
+
+<head>
+
+    <title>Resume Analyzer</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body class="dashboard-page">
+
+<div class="dashboard-header">
+
+    <div>
+
+        <h2 class="welcome-text">
+            📄 Resume Analyzer
+        </h2>
+
+        <p class="dashboard-subtitle">
+            Upload your resume and discover skill gaps.
+        </p>
+
+    </div>
+
+    <a href="/home" class="nav-btn">
+        🏠 Back to Home
+    </a>
+
+</div>
+
+<div class="dashboard-container">
+
+    <div class="chart-container">
+
+        <h2>
+            Upload Resume
+        </h2>
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <label>
+                Select Target Career
+            </label>
+
+            <select
+                name="career_goal"
+                required
+            >
+
+                <option>
+                    Data Analyst
+                </option>
+
+                <option>
+                    Data Scientist
+                </option>
+
+                <option>
+                    Software Developer
+                </option>
+
+                <option>
+                    Machine Learning Engineer
+                </option>
+
+                <option>
+                    Business Analyst
+                </option>
+
+            </select>
+
+            <br><br>
+
+<input
+    type="file"
+    id="resume"
+    name="resume"
+    accept=".pdf"
+    hidden
+    required
+>
+
+<label for="resume" class="upload-btn">
+    📄 Choose Resume PDF
+</label>
+
+<br><br>
+
+            <button
+                type="submit"
+                class="generate-btn"
+            >
+                🚀 Analyze Resume
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

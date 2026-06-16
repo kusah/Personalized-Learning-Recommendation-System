@@ -1,3 +1,5 @@
+from matplotlib import text
+
 from machine_learning.recommendation import generate_roadmap
 from flask import redirect 
 import mysql.connector
@@ -6,6 +8,7 @@ from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 import os
 from dotenv import load_dotenv
+import pdfplumber
 
 load_dotenv()
 
@@ -348,5 +351,67 @@ def profile():
         pending_count=pending_count,
         progress=progress
     )
+@app.route("/resume", methods=["GET", "POST"])
+def resume():
+
+    if "student_id" not in session:
+        return redirect("/login")
+
+    if request.method == "POST":
+
+        career_goal = request.form["career_goal"]
+
+        resume_file = request.files["resume"]
+
+        print(resume_file.filename)
+        resume_file = request.files["resume"]
+
+        text = ""
+
+        with pdfplumber.open(resume_file) as pdf:
+
+            for page in pdf.pages:
+
+                page_text = page.extract_text()
+
+                if page_text:
+                    text += page_text
+
+        print(text)
+        skills_db = [
+            "Python",
+            "SQL",
+            "Excel",
+            "Power BI",
+            "Statistics",
+            "Machine Learning",
+            "Deep Learning",
+            "Pandas",
+            "NumPy",
+            "Scikit-learn",
+            "TensorFlow",
+            "PyTorch",
+            "Java",
+            "C++",
+            "React",
+            "FastAPI",
+            "Flask",
+            "Git",
+            "GitHub",
+            "Tableau"
+        ]
+
+        found_skills = []
+
+        for skill in skills_db:
+
+            if skill.lower() in text.lower():
+
+                found_skills.append(skill)
+
+        print("\nDetected Skills:")
+        print(found_skills)
+
+    return render_template("resume.html")
 if __name__ == "__main__":
     app.run(debug=True)
