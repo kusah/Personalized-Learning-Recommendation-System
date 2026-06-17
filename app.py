@@ -1,5 +1,5 @@
 from matplotlib import text
-
+from machine_learning.recommendation import recommend_by_skill_gap, career_skills
 from machine_learning.recommendation import generate_roadmap
 from flask import redirect 
 import mysql.connector
@@ -20,7 +20,6 @@ db = mysql.connector.connect(
 )
 
 cursor = db.cursor()
-
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 @app.route("/")
@@ -353,7 +352,11 @@ def profile():
     )
 @app.route("/resume", methods=["GET", "POST"])
 def resume():
-
+    found_skills = []
+    missing_skills = []
+    resume_score = None
+    recommendations = None
+    career_goal = ""
     if "student_id" not in session:
         return redirect("/login")
 
@@ -361,9 +364,6 @@ def resume():
 
         career_goal = request.form["career_goal"]
 
-        resume_file = request.files["resume"]
-
-        print(resume_file.filename)
         resume_file = request.files["resume"]
 
         text = ""
@@ -377,7 +377,6 @@ def resume():
                 if page_text:
                     text += page_text
 
-        print(text)
         skills_db = [
             "Python",
             "SQL",
@@ -406,11 +405,39 @@ def resume():
         for skill in skills_db:
 
             if skill.lower() in text.lower():
-
                 found_skills.append(skill)
 
-        print("\nDetected Skills:")
-        print(found_skills)
+        required_skills = career_skills[career_goal]
+
+        missing_skills = []
+
+        for skill in required_skills:
+
+            if skill not in found_skills:
+                missing_skills.append(skill)
+
+        matched_skills = len(required_skills) - len(missing_skills)
+
+        resume_score = int(
+            (matched_skills / len(required_skills)) * 100
+        )
+        recommendations = recommend_by_skill_gap(
+                career_goal,
+                found_skills
+            )
+
+        print("Found Skills:", found_skills)
+        print("Missing Skills:", missing_skills)
+        print("Score:", resume_score)
+
+        return render_template(
+            "resume.html",
+            found_skills=found_skills,
+            missing_skills=missing_skills,
+            resume_score=resume_score,
+            career_goal=career_goal,
+            recommendations=recommendations
+        )
 
     return render_template("resume.html")
 if __name__ == "__main__":

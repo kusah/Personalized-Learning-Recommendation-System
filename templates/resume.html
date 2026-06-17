@@ -73,11 +73,8 @@
                 <option>
                     Business Analyst
                 </option>
-
             </select>
-
             <br><br>
-
 <input
     type="file"
     id="resume"
@@ -86,25 +83,97 @@
     hidden
     required
 >
-
 <label for="resume" class="upload-btn">
     📄 Choose Resume PDF
 </label>
-
 <br><br>
-
             <button
                 type="submit"
                 class="generate-btn"
             >
                 🚀 Analyze Resume
             </button>
-
         </form>
+        <h1 style="color:red;">TEST RESULT BLOCK</h1>
+        {% if resume_score is defined %}
 
+<div class="resume-result-card">
+
+    <h2>📊 Resume Analysis Result</h2>
+
+    <div class="score-card">
+
+        <h3>Resume Score</h3>
+
+        <div class="score-circle">
+            {{ resume_score }}%
+        </div>
+
+        <p>
+            Target Career:
+            {{ career_goal }}
+        </p>
+
+    </div>
+
+    <div class="result-section">
+
+        <h3>✅ Detected Skills</h3>
+
+        {% for skill in found_skills %}
+
+            <span class="skill-badge">
+                {{ skill }}
+            </span>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="result-section">
+
+        <h3>❌ Missing Skills</h3>
+
+        {% for skill in missing_skills %}
+
+            <span class="missing-badge">
+                {{ skill }}
+            </span>
+
+        {% endfor %}
+            <div class="result-section">
+
+    <h3>📚 Recommended Courses</h3>
+
+    <table class="history-table">
+
+        <tr>
+            <th>Course</th>
+            <th>Skill</th>
+            <th>Level</th>
+        </tr>
+
+        {% for row in recommendations.values %}
+
+        <tr>
+
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
     </div>
 
 </div>
 
+{% endif %}
+    </div>
+</div>
 </body>
 </html>
