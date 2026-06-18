@@ -94,7 +94,6 @@
                 🚀 Analyze Resume
             </button>
         </form>
-        <h1 style="color:red;">TEST RESULT BLOCK</h1>
         {% if resume_score is defined %}
 
 <div class="resume-result-card">
@@ -143,9 +142,9 @@
         {% endfor %}
             <div class="result-section">
 
-    <h3>📚 Recommended Courses</h3>
+        <h3>📚 Recommended Courses</h3>
 
-    <table class="history-table">
+        <table class="history-table">
 
         <tr>
             <th>Course</th>
@@ -165,9 +164,27 @@
 
         {% endfor %}
 
-    </table>
+        </table>
 
-</div>
+     </div>
+    {% if recommendations is not none and recommendations|length > 0 %}
+        <form action="/add_resume_roadmap" method="POST">
+            <input
+                type="hidden"
+                name="career_goal"
+                value="{{ career_goal }}"
+            >
+            <button
+                type="submit"
+                class="generate-btn"
+            >
+            🚀 Add Recommended Courses To Roadmap
+            </button>
+
+        </form>
+
+    {% endif %}
+
     </div>
 
 </div>

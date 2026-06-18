@@ -425,7 +425,10 @@ def resume():
                 career_goal,
                 found_skills
             )
-
+        session["recommended_courses"] = (
+            recommendations["course_name"]
+            .tolist()
+        )
         print("Found Skills:", found_skills)
         print("Missing Skills:", missing_skills)
         print("Score:", resume_score)
@@ -440,5 +443,33 @@ def resume():
         )
 
     return render_template("resume.html")
+@app.route("/add_resume_roadmap", methods=["POST"])
+def add_resume_roadmap():
+
+    if "student_id" not in session:
+        return redirect("/login")
+
+    courses = session.get(
+        "recommended_courses",
+        []
+    )
+
+    for course in courses:
+
+        cursor.execute(
+            """
+            INSERT INTO course_progress
+            (student_id, course_name)
+            VALUES (%s, %s)
+            """,
+            (
+                session["student_id"],
+                course
+            )
+        )
+
+    db.commit()
+
+    return redirect("/progress")
 if __name__ == "__main__":
     app.run(debug=True)
