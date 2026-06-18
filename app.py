@@ -427,6 +427,7 @@ def resume():
             )
         session["recommended_courses"] = (
             recommendations["course_name"]
+            .drop_duplicates()
             .tolist()
         )
         print("Found Skills:", found_skills)
@@ -449,24 +450,40 @@ def add_resume_roadmap():
     if "student_id" not in session:
         return redirect("/login")
 
-    courses = session.get(
-        "recommended_courses",
-        []
-    )
+    courses = list(set(
+        session.get("recommended_courses", [])
+    ))
 
     for course in courses:
 
         cursor.execute(
             """
-            INSERT INTO course_progress
-            (student_id, course_name)
-            VALUES (%s, %s)
+            SELECT COUNT(*)
+            FROM course_progress
+            WHERE student_id = %s
+            AND course_name = %s
             """,
             (
                 session["student_id"],
                 course
             )
         )
+
+        count = cursor.fetchone()[0]
+
+        if count == 0:
+
+            cursor.execute(
+                """
+                INSERT INTO course_progress
+                (student_id, course_name)
+                VALUES (%s, %s)
+                """,
+                (
+                    session["student_id"],
+                    course
+                )
+            )
 
     db.commit()
 
