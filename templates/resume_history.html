@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume History</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-page">
+
+<div class="dashboard-header">
+
+    <div>
+        <h2 class="welcome-text">
+            📄 Resume Analysis History
+        </h2>
+
+        <p class="dashboard-subtitle">
+            View all your previous resume analyses.
+        </p>
+    </div>
+
+    <a href="/home" class="nav-btn">
+        🏠 Back to Home
+    </a>
+
+</div>
+
+<div class="dashboard-container">
+
+    <div class="chart-container">
+
+        <table class="progress-table">
+
+            <tr>
+                <th>#</th>
+                <th>Career Goal</th>
+                <th>Score</th>
+                <th>Date</th>
+            </tr>
+
+            {% for row in history %}
+
+            <tr>
+
+                <td>{{ loop.index }}</td>
+
+                <td>{{ row[2] }}</td>
+
+                <td>{{ row[3] }}%</td>
+
+                <td>{{ row[6] }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

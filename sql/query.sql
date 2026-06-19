@@ -56,3 +56,22 @@ SELECT * FROM students;
 SELECT * 
 FROM course_progress
 WHERE student_id = 1;
+
+
+CREATE TABLE resume_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    career_goal VARCHAR(100),
+    resume_score INT,
+    found_skills TEXT,
+    missing_skills TEXT,
+    analyzed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+SELECT * FROM resume_history;
+
+CREATE TABLE student_skills(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT,
+    skill_name VARCHAR(100)
+);

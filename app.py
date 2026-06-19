@@ -191,6 +191,21 @@ AND completed = TRUE
 AND completed = FALSE
     """, (session["student_id"],))
     pending = cursor.fetchone()[0]
+    cursor.execute("""
+        SELECT resume_score
+        FROM resume_history
+        WHERE student_id = %s
+        ORDER BY analyzed_at DESC
+        LIMIT 1
+        """,
+    (session["student_id"],))
+
+    latest_resume = cursor.fetchone()
+
+    if latest_resume:
+        latest_resume_score = latest_resume[0]
+    else:
+        latest_resume_score = 0
 
     return render_template(
     "dashboard.html",
@@ -198,7 +213,7 @@ AND completed = FALSE
     popular_goal=popular_goal,
     completed=completed,
     pending=pending,
-
+    latest_resume_score=latest_resume_score,
     chart_labels=["Completed", "Pending"],
     chart_values=[completed, pending]
 )
@@ -363,6 +378,7 @@ def resume():
     if request.method == "POST":
 
         career_goal = request.form["career_goal"]
+        session["resume_career_goal"] = career_goal
 
         resume_file = request.files["resume"]
 
@@ -406,6 +422,23 @@ def resume():
 
             if skill.lower() in text.lower():
                 found_skills.append(skill)
+        for skill in found_skills:
+            try:
+                cursor.execute(
+                """
+                INSERT INTO student_skills
+                (student_id, skill_name)
+                VALUES (%s, %s)
+                """,
+                (
+                    session["student_id"],
+                    skill
+                )
+            )
+            except:
+                pass
+
+            db.commit()
 
         required_skills = career_skills[career_goal]
 
@@ -421,6 +454,29 @@ def resume():
         resume_score = int(
             (matched_skills / len(required_skills)) * 100
         )
+        cursor.execute(
+            """
+            INSERT INTO resume_history
+            (
+                student_id,
+                career_goal,
+                resume_score,
+                found_skills,
+                missing_skills
+            )
+            VALUES (%s,%s,%s,%s,%s)
+            """,
+            (
+                session["student_id"],
+                career_goal,
+                resume_score,
+                ", ".join(found_skills),
+                ", ".join(missing_skills)
+            )
+        )
+        
+
+        db.commit()
         recommendations = recommend_by_skill_gap(
                 career_goal,
                 found_skills
@@ -484,9 +540,44 @@ def add_resume_roadmap():
                     course
                 )
             )
-
+    cursor.execute(
+    """
+    INSERT INTO roadmap_history
+    (student_id, career_goal, skills)
+    VALUES (%s, %s, %s)
+    """,
+    (
+        session["student_id"],
+        session.get("resume_career_goal", ""),
+        "Resume Generated"
+    )
+)
     db.commit()
 
     return redirect("/progress")
+
+@app.route("/resume_history")
+def resume_history():
+
+    if "student_id" not in session:
+        return redirect("/login")
+
+    cursor.execute(
+        """
+        SELECT *
+        FROM resume_history
+        WHERE student_id = %s
+        ORDER BY analyzed_at DESC
+        """,
+        (session["student_id"],)
+    )
+
+    history = cursor.fetchall()
+
+    return render_template(
+        "resume_history.html",
+        history=history
+    )
+
 if __name__ == "__main__":
     app.run(debug=True)
