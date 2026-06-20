@@ -75,3 +75,39 @@ CREATE TABLE student_skills(
     student_id INT,
     skill_name VARCHAR(100)
 );
+SELECT * FROM student_skills;
+
+SELECT *
+FROM student_skills
+ORDER BY student_id, skill_name;
+
+DELETE s1
+FROM student_skills s1
+JOIN student_skills s2
+ON s1.student_id = s2.student_id
+AND s1.skill_name = s2.skill_name
+AND s1.id > s2.id;
+
+SET SQL_SAFE_UPDATES = 1;
+DELETE s1
+FROM student_skills s1
+JOIN student_skills s2
+ON s1.student_id = s2.student_id
+AND s1.skill_name = s2.skill_name
+AND s1.id > s2.id;
+
+SELECT *
+FROM student_skills
+ORDER BY student_id, skill_name;
+ALTER TABLE student_skills
+ADD UNIQUE (student_id, skill_name);
+SHOW TABLES;
+SELECT * FROM courses;
+SELECT * FROM recommendations;
+
+SELECT student_id,
+       skill_name,
+       COUNT(*) AS total
+FROM student_skills
+GROUP BY student_id, skill_name
+HAVING COUNT(*) > 1;

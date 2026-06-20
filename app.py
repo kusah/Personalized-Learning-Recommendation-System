@@ -28,8 +28,10 @@ def landing():
 
 @app.route("/home", methods=["GET", "POST"])
 def home():
+
     if "student_id" not in session:
         return redirect("/login")
+
     roadmap = None
     career_goal = ""
     known_skills = []
@@ -44,33 +46,54 @@ def home():
             career_goal,
             known_skills
         )
+
+        # Add courses only if they don't already exist
         for _, row in roadmap.iterrows():
-            cursor.execute("""
-                INSERT INTO course_progress
-                (student_id, course_name)
-                VALUES (%s, %s)
-            """,
-        (
-            session["student_id"],
-            row["course_name"]
-        )
-)
-        db.commit()
+
+            cursor.execute(
+                """
+                SELECT COUNT(*)
+                FROM course_progress
+                WHERE student_id = %s
+                AND course_name = %s
+                """,
+                (
+                    session["student_id"],
+                    row["course_name"]
+                )
+            )
+
+            count = cursor.fetchone()[0]
+
+            if count == 0:
+
+                cursor.execute(
+                    """
+                    INSERT INTO course_progress
+                    (student_id, course_name)
+                    VALUES (%s, %s)
+                    """,
+                    (
+                        session["student_id"],
+                        row["course_name"]
+                    )
+                )
+
         skills_text = ", ".join(known_skills)
 
-        query = """
+        cursor.execute(
+            """
             INSERT INTO roadmap_history
             (student_id, career_goal, skills)
             VALUES (%s, %s, %s)
-        """
-
-        values = (
-            session["student_id"],
-            career_goal,
-            skills_text
+            """,
+            (
+                session["student_id"],
+                career_goal,
+                skills_text
+            )
         )
 
-        cursor.execute(query, values)
         db.commit()
 
     return render_template(
@@ -136,6 +159,9 @@ def progress():
 @app.route("/complete/<int:id>")
 def complete(id):
 
+    if "student_id" not in session:
+        return redirect("/login")
+
     cursor.execute(
         """
         UPDATE course_progress
@@ -143,10 +169,12 @@ def complete(id):
         WHERE id = %s
         AND student_id = %s
         """,
-        (id, session["student_id"])
+        (
+            id,
+            session["student_id"]
+        )
     )
-    if "student_id" not in session:
-        return redirect("/login")
+
     db.commit()
 
     return redirect("/progress")
@@ -175,6 +203,8 @@ def dashboard():
     (session["student_id"],))
 
     popular_goal = cursor.fetchone()
+    if not popular_goal:
+        popular_goal = ("No Roadmaps Yet", 0)
 
     cursor.execute("""
         SELECT COUNT(*)
@@ -239,7 +269,10 @@ def register():
         existing_user = cursor.fetchone()
 
         if existing_user:
-            return "Email already exists"
+            return render_template(
+                "register.html",
+                error="Email already exists"
+            )
         cursor.execute(
     """
     INSERT INTO students
@@ -288,11 +321,10 @@ def login():
 
             return redirect("/home")
 
-        else:
-
-            return "Invalid Credentials"
-
-    return render_template("login.html")
+        return render_template(
+            "login.html",
+            error="Invalid Email or Password"
+        )
 @app.route("/logout")
 def logout():
 
@@ -317,6 +349,8 @@ def profile():
     """, (student_id,))
 
     student = cursor.fetchone()
+    if not student:
+        return redirect("/login")
 
     # Roadmaps Generated
     cursor.execute("""
@@ -425,20 +459,21 @@ def resume():
         for skill in found_skills:
             try:
                 cursor.execute(
-                """
-                INSERT INTO student_skills
-                (student_id, skill_name)
-                VALUES (%s, %s)
-                """,
+                    """
+                    INSERT INTO student_skills
+                    (student_id, skill_name)
+                    VALUES (%s, %s)
+                    """,
                 (
                     session["student_id"],
                     skill
                 )
             )
-            except:
-                pass
 
-            db.commit()
+            except Exception as e:
+                print(e)
+
+        db.commit()
 
         required_skills = career_skills[career_goal]
 
@@ -486,9 +521,9 @@ def resume():
             .drop_duplicates()
             .tolist()
         )
-        print("Found Skills:", found_skills)
-        print("Missing Skills:", missing_skills)
-        print("Score:", resume_score)
+        # print("Found Skills:", found_skills)
+        # print("Missing Skills:", missing_skills)
+        # print("Score:", resume_score)
 
         return render_template(
             "resume.html",

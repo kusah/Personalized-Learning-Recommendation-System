@@ -31,41 +31,55 @@
 
     <div class="chart-container">
 
-        <h2>📚 Generated Roadmaps</h2>
+    <h2>📚 Generated Roadmaps</h2>
 
-        <table class="history-table">
+    {% if rows %}
 
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Career Goal</th>
-                    <th>Skills</th>
-                    <th>Date Generated</th>
-                </tr>
-            </thead>
+    <table class="history-table">
 
-            <tbody>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Career Goal</th>
+                <th>Skills</th>
+                <th>Date Generated</th>
+            </tr>
+        </thead>
 
-                {% for row in rows %}
+        <tbody>
 
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ row[1] }}</td>
-                    <td>{{ row[2] }}</td>
-                    <td>{{ row[3] }}</td>
-                </tr>
-                {% else %}
-    <div style="text-align:center;padding:40px;">
-        <h3>📭 No Roadmaps Generated Yet</h3>
-        <p>Generate your first roadmap to see history here.</p>
+            {% for row in rows %}
+
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="empty-state">
+
+        <h3>
+            📭 No Roadmaps Generated Yet
+        </h3>
+
+        <p>
+            Generate your first roadmap to see history here.
+        </p>
+
     </div>
-                {% endfor %}
 
-            </tbody>
+    {% endif %}
 
-        </table>
-
-    </div>
+</div>
 
 </div>
 

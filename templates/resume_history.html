@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Resume History</title>
+
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -30,32 +32,64 @@
 
     <div class="chart-container">
 
-        <table class="progress-table">
+        <h2>
+            📊 Resume Analysis Records
+        </h2>
 
-            <tr>
-                <th>#</th>
-                <th>Career Goal</th>
-                <th>Score</th>
-                <th>Date</th>
-            </tr>
+        {% if history %}
 
-            {% for row in history %}
+        <table class="history-table">
 
-            <tr>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Career Goal</th>
+                    <th>Score</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
 
-                <td>{{ loop.index }}</td>
+            <tbody>
 
-                <td>{{ row[2] }}</td>
+                {% for row in history %}
 
-                <td>{{ row[3] }}%</td>
+                <tr>
 
-                <td>{{ row[6] }}</td>
+                    <td>{{ loop.index }}</td>
 
-            </tr>
+                    <td>{{ row[2] }}</td>
 
-            {% endfor %}
+                    <td>
+                        {{ row[3] }}%
+                    </td>
+
+                    <td>
+                        {{ row[6] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
 
         </table>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <h3>
+                📭 No Resume Analyses Yet
+            </h3>
+
+            <p>
+                Upload a resume to start tracking your resume scores.
+            </p>
+
+        </div>
+
+        {% endif %}
 
     </div>
 

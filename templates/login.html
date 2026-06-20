@@ -30,9 +30,15 @@
                 placeholder="Password"
                 required
             >
+                        {% if error %}
+<p class="error-message">
+    {{ error }}
+</p>
+{% endif %}
             <button type="submit">
                 Login
             </button>
+ 
         </form>
         <div class="auth-footer">
             Don't have an account?
