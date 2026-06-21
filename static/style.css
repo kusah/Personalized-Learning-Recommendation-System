@@ -701,20 +701,6 @@ html{
     max-height:400px;
     margin:auto;
 }
-.hero-section{
-    text-align:center;
-    margin:40px 0;
-}
-
-.hero-section h1{
-    color:white;
-    font-size:48px;
-}
-
-.hero-section p{
-    color:#cbd5e1;
-}
-
 .roadmap-card{
     background:rgba(255,255,255,0.08);
     border-radius:15px;
@@ -799,40 +785,21 @@ html{
         #7c3aed
     );
 }
-
 .generate-btn:hover{
     transform:translateY(-2px);
 }
-
 .summary-card{
     background:rgba(255,255,255,0.08);
     color:white;
     border-left:none;
     margin-top:20px;
 }
-
 table{
     background:rgba(255,255,255,0.08);
     color:white;
 }
-
 td{
     color:white;
-}
-
-.hero-section{
-    text-align:center;
-    margin-bottom:40px;
-}
-
-.hero-section h1{
-    font-size:56px;
-    font-weight:800;
-    margin-bottom:20px;
-}
-
-.hero-section p{
-    color:#cbd5e1;
 }
 
 .skill-item{
@@ -957,10 +924,8 @@ td{
     color:#93c5fd;
     text-decoration:underline;
 }
-
 .progress-fill{
     height:100%;
-
     background:linear-gradient(
         90deg,
         #22c55e,
@@ -969,7 +934,6 @@ td{
 
     border-radius:20px;
 }
-
 .progress-info{
     display:flex;
     justify-content:space-between;

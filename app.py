@@ -1,4 +1,3 @@
-from matplotlib import text
 from machine_learning.recommendation import recommend_by_skill_gap, career_skills
 from machine_learning.recommendation import generate_roadmap
 from flask import redirect 
@@ -9,33 +8,26 @@ from werkzeug.security import check_password_hash
 import os
 from dotenv import load_dotenv
 import pdfplumber
-
 load_dotenv()
-
 db = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
     user=os.getenv("DB_USER"),
     password=os.getenv("DB_PASSWORD"),
     database=os.getenv("DB_NAME")
 )
-
 cursor = db.cursor()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 @app.route("/")
 def landing():
     return render_template("landing.html")
-
 @app.route("/home", methods=["GET", "POST"])
 def home():
-
     if "student_id" not in session:
         return redirect("/login")
-
     roadmap = None
     career_goal = ""
     known_skills = []
-
     if request.method == "POST":
 
         career_goal = request.form["career_goal"]
@@ -46,8 +38,6 @@ def home():
             career_goal,
             known_skills
         )
-
-        # Add courses only if they don't already exist
         for _, row in roadmap.iterrows():
 
             cursor.execute(
@@ -286,7 +276,6 @@ def register():
         hashed_password
     )
 )
-
         db.commit()
 
         return redirect("/login")
@@ -325,6 +314,8 @@ def login():
             "login.html",
             error="Invalid Email or Password"
         )
+
+    return render_template("login.html")
 @app.route("/logout")
 def logout():
 
@@ -559,11 +550,8 @@ def add_resume_roadmap():
                 course
             )
         )
-
         count = cursor.fetchone()[0]
-
         if count == 0:
-
             cursor.execute(
                 """
                 INSERT INTO course_progress
@@ -588,15 +576,11 @@ def add_resume_roadmap():
     )
 )
     db.commit()
-
     return redirect("/progress")
-
 @app.route("/resume_history")
 def resume_history():
-
     if "student_id" not in session:
         return redirect("/login")
-
     cursor.execute(
         """
         SELECT *
@@ -606,13 +590,10 @@ def resume_history():
         """,
         (session["student_id"],)
     )
-
     history = cursor.fetchall()
-
     return render_template(
         "resume_history.html",
         history=history
     )
-
 if __name__ == "__main__":
     app.run(debug=True)
