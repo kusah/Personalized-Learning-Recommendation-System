@@ -1112,3 +1112,13 @@ input[type="file"]{
 .empty-state h3{
     margin-bottom:10px;
 }
+.success-card{
+    background: rgba(34,197,94,0.15);
+    border: 1px solid rgba(34,197,94,0.4);
+    color: #86efac;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 15px;
+}
