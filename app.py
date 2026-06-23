@@ -619,5 +619,30 @@ def resume_history():
         "resume_history.html",
         history=history
     )
+
+@app.route("/dbtest")
+def dbtest():
+    try:
+        test_db = mysql.connector.connect(
+            host=os.getenv("DB_HOST"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            database=os.getenv("DB_NAME"),
+            port=int(os.getenv("DB_PORT")),
+            connection_timeout=30
+        )
+
+        cur = test_db.cursor()
+        cur.execute("SELECT 1")
+        result = cur.fetchone()
+
+        cur.close()
+        test_db.close()
+
+        return f"Connected: {result}"
+
+    except Exception as e:
+        return f"ERROR: {e}"
+
 if __name__ == "__main__":
     app.run(debug=True)
