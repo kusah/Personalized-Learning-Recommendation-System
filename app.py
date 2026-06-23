@@ -8,6 +8,7 @@ from werkzeug.security import check_password_hash
 import os
 from dotenv import load_dotenv
 import pdfplumber
+from machine_learning.recommendation import predict_career_match
 load_dotenv()
 db = mysql.connector.connect(
     host=os.getenv("DB_HOST"),
@@ -419,6 +420,17 @@ def resume():
                 if page_text:
                     text += page_text
 
+        resume_text = text + " " + " ".join(found_skills)
+        career_matches = predict_career_match(resume_text)
+
+        if career_matches:
+                best_career = career_matches[0][0]
+                best_score = career_matches[0][1]
+        else:
+            best_career = "Unknown"
+            best_score = 0
+        print(found_skills)
+        print(career_matches)
         skills_db = [
             "Python",
             "SQL",
@@ -439,7 +451,13 @@ def resume():
             "Flask",
             "Git",
             "GitHub",
-            "Tableau"
+            "Tableau",
+            "JavaScript",
+            "HTML",
+            "CSS",
+            "SQLite",
+            "DBMS",
+            "Data Analysis",
         ]
 
         found_skills = []
@@ -462,8 +480,8 @@ def resume():
                 )
             )
 
-            except Exception as e:
-                print(e)
+            except:
+                pass
 
         db.commit()
 
@@ -513,9 +531,6 @@ def resume():
             .drop_duplicates()
             .tolist()
         )
-        # print("Found Skills:", found_skills)
-        # print("Missing Skills:", missing_skills)
-        # print("Score:", resume_score)
 
         return render_template(
             "resume.html",
@@ -523,7 +538,10 @@ def resume():
             missing_skills=missing_skills,
             resume_score=resume_score,
             career_goal=career_goal,
-            recommendations=recommendations
+            recommendations=recommendations,
+            career_matches=career_matches,
+            best_career=best_career,
+            best_score=best_score,
         )
 
     return render_template("resume.html")

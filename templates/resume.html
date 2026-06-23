@@ -1,6 +1,4 @@
-
 <html>
-
 <head>
 
     <title>Resume Analyzer</title>
@@ -13,9 +11,11 @@
 <body class="dashboard-page">
 
 <div class="dashboard-header">
+
     <a href="/resume_history" class="nav-btn">
-    📄 Resume History
-</a>
+        📄 Resume History
+    </a>
+
     <div>
 
         <h2 class="welcome-text">
@@ -56,144 +56,244 @@
                 required
             >
 
-                <option>
-                    Data Analyst
-                </option>
+                <option>Data Analyst</option>
+                <option>Data Scientist</option>
+                <option>Software Developer</option>
+                <option>Machine Learning Engineer</option>
+                <option>Business Analyst</option>
 
-                <option>
-                    Data Scientist
-                </option>
-
-                <option>
-                    Software Developer
-                </option>
-
-                <option>
-                    Machine Learning Engineer
-                </option>
-
-                <option>
-                    Business Analyst
-                </option>
             </select>
+
             <br><br>
-<input
-    type="file"
-    id="resume"
-    name="resume"
-    accept=".pdf"
-    hidden
-    required
->
-<label for="resume" class="upload-btn">
-    📄 Choose Resume PDF
-</label>
-<br><br>
+
+            <input
+                type="file"
+                id="resume"
+                name="resume"
+                accept=".pdf"
+                hidden
+                required
+            >
+
+            <label
+                for="resume"
+                class="upload-btn"
+            >
+                📄 Choose Resume PDF
+            </label>
+
+            <br><br>
+
             <button
                 type="submit"
                 class="generate-btn"
             >
                 🚀 Analyze Resume
             </button>
+
         </form>
+
         {% if resume_score is defined %}
 
-<div class="resume-result-card">
+        <div class="resume-result-card">
 
-    <h2>📊 Resume Analysis Result</h2>
+            <h2>
+                📊 Resume Analysis Result
+            </h2>
 
-    <div class="score-card">
+            <!-- Resume Score -->
 
-        <h3>Resume Score</h3>
+            <div class="score-card">
 
-        <div class="score-circle">
-            {{ resume_score }}%
-        </div>
+                <h3>
+                    Resume Score
+                </h3>
 
-        <p>
-            Target Career:
-            {{ career_goal }}
-        </p>
+                <div class="score-circle">
+                    {{ resume_score }}%
+                </div>
 
-    </div>
+                <p>
+                    Target Career:
+                    {{ career_goal }}
+                </p>
 
-    <div class="result-section">
+            </div>
 
-        <h3>✅ Detected Skills</h3>
+            <!-- Detected Skills -->
 
-        {% for skill in found_skills %}
-
-            <span class="skill-badge">
-                {{ skill }}
-            </span>
-
-        {% endfor %}
-
-    </div>
-</div>
-    <div class="result-section">
-
-        <h3>❌ Missing Skills</h3>
-
-        {% for skill in missing_skills %}
-
-            <span class="missing-badge">
-                {{ skill }}
-            </span>
-
-        {% endfor %}
-        </div>
             <div class="result-section">
 
-        <h3>📚 Recommended Courses</h3>
+                <h3>
+                    ✅ Detected Skills
+                </h3>
 
-        <table class="history-table">
+                {% for skill in found_skills %}
 
-        <tr>
-            <th>Course</th>
-            <th>Skill</th>
-            <th>Level</th>
-        </tr>
+                <span class="skill-badge">
+                    {{ skill }}
+                </span>
 
-        {% for row in recommendations.values %}
+                {% endfor %}
 
-        <tr>
+            </div>
 
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
+            <!-- Missing Skills -->
 
-        </tr>
+            <div class="result-section">
 
-        {% endfor %}
+                <h3>
+                    ❌ Missing Skills
+                </h3>
 
-        </table>
+                {% if missing_skills %}
 
-     </div>
-    {% if recommendations is not none and recommendations|length > 0 %}
-        <form action="/add_resume_roadmap" method="POST">
-            <input
-                type="hidden"
-                name="career_goal"
-                value="{{ career_goal }}"
+                    {% for skill in missing_skills %}
+
+                    <span class="missing-badge">
+                        {{ skill }}
+                    </span>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="success-card">
+                        🎉 No Skill Gaps Found!
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <!-- Recommended Courses -->
+
+            <div class="result-section">
+
+                <h3>
+                    📚 Recommended Courses
+                </h3>
+
+                {% if recommendations is not none and recommendations|length > 0 %}
+
+                <table class="history-table">
+
+                    <tr>
+                        <th>Course</th>
+                        <th>Skill</th>
+                        <th>Level</th>
+                    </tr>
+
+                    {% for row in recommendations.values %}
+
+                    <tr>
+
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ row[2] }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+                {% else %}
+
+                <div class="success-card">
+
+                    🎉 Excellent! You already possess all
+                    required skills for this career path.
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+            <!-- Best Career Match -->
+
+            <div class="score-card">
+
+                <h3>
+                    🎯 Best Career Match
+                </h3>
+
+                <div class="score-circle">
+                    {{ best_score }}%
+                </div>
+
+                <p>
+                    {{ best_career }}
+                </p>
+
+            </div>
+
+            <!-- Career Match Rankings -->
+
+            <div class="result-section">
+
+                <h3>
+                    🎯 Career Match Rankings
+                </h3>
+
+                <table class="history-table">
+
+                    <tr>
+                        <th>Career</th>
+                        <th>Match Score</th>
+                    </tr>
+
+                    {% for career, score in career_matches %}
+
+                    <tr>
+
+                        <td>{{ career }}</td>
+
+                        <td>
+                            {{ score }}%
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </table>
+
+            </div>
+
+            <!-- Add To Roadmap -->
+
+            {% if recommendations is not none and recommendations|length > 0 %}
+
+            <form
+                action="/add_resume_roadmap"
+                method="POST"
             >
-            <button
-                type="submit"
-                class="generate-btn"
-            >
-            🚀 Add Recommended Courses To Roadmap
-            </button>
 
-        </form>
+                <input
+                    type="hidden"
+                    name="career_goal"
+                    value="{{ career_goal }}"
+                >
 
-    {% endif %}
+                <button
+                    type="submit"
+                    class="generate-btn"
+                >
+                    🚀 Add Recommended Courses To Roadmap
+                </button>
+
+            </form>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
 
     </div>
 
-</div>
-
-{% endif %}
-    </div>
 </div>
 </body>
 </html>
