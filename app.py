@@ -15,7 +15,9 @@ db = mysql.connector.connect(
     user=os.getenv("DB_USER"),
     password=os.getenv("DB_PASSWORD"),
     database=os.getenv("DB_NAME"),
-    port=int(os.getenv("DB_PORT"))
+    port=int(os.getenv("DB_PORT")),
+    connection_timeout=30,
+    autocommit=True
 )
 cursor = db.cursor()
 app = Flask(__name__)
@@ -285,7 +287,10 @@ def register():
     return render_template("register.html")
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    db.ping(reconnect=True, attempts=3, delay=2)
 
+    global cursor
+    cursor = db.cursor()
     if request.method == "POST":
 
         email = request.form["email"]
